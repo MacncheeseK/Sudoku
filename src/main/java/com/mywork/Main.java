@@ -2,14 +2,15 @@ package com.mywork;
 
 
 public class Main {
+    public static int[][] sudokuBoard = board(30);
     public static void main(String[] args) {
         System.out.println("Hello world!");
         generateBorad();
+        solve(0,0);
     }
 
     // Creates the Sudoku Board
     public static void generateBorad(){
-       int[][] sudokuBoard = board(30);
         for(int Row=0; Row<9;Row++) {
             if(Row%3==0 && Row!=0) {
                 System.out.print("---------+---------+---------\n");
@@ -70,4 +71,30 @@ public class Main {
     public static boolean checkGrid(int[][] grid, int num,int row, int col){
         return checkCol(grid,num,col) && checkRow(grid, num,row) && checkSquare(grid,num,row,col);
     }
+
+    public static boolean solve(int row, int col){
+
+        if(col == sudokuBoard[row].length){
+            col=0;
+            row++;
+        }
+        if(row ==sudokuBoard.length){
+            return true;
+        }
+        if (sudokuBoard[row][col] != 0) {
+            return solve(row,col+1);
+        }
+        for (int num = 1; num <= 9; num++) {
+            if (checkGrid(sudokuBoard, num, row, col)) {
+                sudokuBoard[row][col] = num;
+                if (solve(row, col + 1)) {
+                    return true;
+                }else{
+                    sudokuBoard[row][col] = 0;
+                }
+            }
+        }
+        return false;
+    }
+
 }
