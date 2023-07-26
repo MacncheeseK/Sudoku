@@ -1,16 +1,24 @@
-package com.mywork;
+package com.DM;
 
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class Main {
-    public static int[][] sudokuBoard = board(30);
+    public static int[][] sudokuBoard = new int [9][9];
+    public static Integer[] values = {1,2,3,4,5,6,7,8,9};
     public static void main(String[] args) {
         System.out.println("Hello world!");
-        generateBorad();
-        solve(0,0);
+        generateBoard();
+        printBorad();
+
     }
 
+    // instead of creating a half completed board create a full completed  board then take away the cells
+
     // Creates the Sudoku Board
-    public static void generateBorad(){
+    public static void printBorad(){
         for(int Row=0; Row<9;Row++) {
             if(Row%3==0 && Row!=0) {
                 System.out.print("---------+---------+---------\n");
@@ -21,27 +29,32 @@ public class Main {
             }
             System.out.println();
         }
+        System.out.println();
     }
 
-    public static int[][] board(int Difficulty){
-        int[][] grid =new int[9][9];
-        int row,col,genNum;
-        for(int intrations =0; intrations<Difficulty;intrations++){
-            do{
-                row= (int)(Math.random()*9);
-                col= (int)(Math.random()*9);
-            }while(grid[row][col]!=0);
-            do{
-                genNum=(int)(1+ Math.random()*9);
-            }while(!(checkGrid(grid,genNum,row,col) ));
+    public static boolean generateBoard(){
+         int row = 0,col=0;
+         for(int i=0; i<81;i++){
+             row = Math.floorDiv(i,9);
+             col=i%9;
+             if(sudokuBoard[row][col]==0){
+                 List<Integer> listValues = Arrays.asList(values);
+                 Collections.shuffle(listValues);
+                 listValues.toArray(values);
+                 for(int j=0;j<9;j++){
+                     if(checkGrid(sudokuBoard,values[j],row,col)){
+                         sudokuBoard[row][col]=values[j];
+                         if(!checkEmpty(sudokuBoard)||generateBoard()){
+                             return true;
+                         }
+                     }
+                     break;
+                 }
 
-
-
-            grid[row][col]=genNum;
-
-        }
-
-        return grid;
+             }
+         }
+         sudokuBoard[row][col]=0;
+        return false;
     }
 
     public static boolean checkRow(int[][] grid, int num, int row){
@@ -70,6 +83,16 @@ public class Main {
     }
     public static boolean checkGrid(int[][] grid, int num,int row, int col){
         return checkCol(grid,num,col) && checkRow(grid, num,row) && checkSquare(grid,num,row,col);
+    }
+    public static  boolean checkEmpty(int[][] grid){
+        for(int row=0; row<9; row++){
+            for(int col=0; col<9; col++){
+                if(grid[row][col] ==0){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public static boolean solve(int row, int col){
