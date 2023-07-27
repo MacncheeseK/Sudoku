@@ -4,15 +4,14 @@ package com.DM;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static int[][] sudokuBoard = new int [9][9];
     public static Integer[] values = {1,2,3,4,5,6,7,8,9};
     public static void main(String[] args) {
-        System.out.println("Hello world!");
         generateBoard();
-        createDifficulty(3);
-        printBoard();
+        chooseDifficulty();
 
     }
 
@@ -56,6 +55,20 @@ public class Main {
          sudokuBoard[row][col]=0;
         return false;
     }
+    public static void chooseDifficulty(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Please type your number for difficulty.");
+        System.out.println("1. Easy\n2. Medium\n3. Hard\n4.Exit");
+
+        int userInput =input.nextInt();
+        if(userInput!=4) {
+            createDifficulty(userInput);
+            printBoard();
+            sudokuStart();
+        }
+
+
+    }
 
     public static void createDifficulty( int difficulty) {
 
@@ -84,6 +97,23 @@ public class Main {
             }while(sudokuBoard[row][col] ==0);
 
             sudokuBoard[row][col]=0;
+        }
+    }
+
+    public static void sudokuStart(){
+        Scanner input = new Scanner(System.in);
+        while(true){
+            System.out.println("Please type your next step");
+            System.out.println("1. Start the game\n2.Auto solve\n3.Exit");
+            int userInput = input.nextInt();
+            if(userInput==1){
+
+            }else if(userInput ==2){
+                solve(0,0);
+                printBoard();
+            }else if(userInput ==3){
+                break;
+            }
         }
     }
 
