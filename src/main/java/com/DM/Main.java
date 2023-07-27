@@ -11,14 +11,15 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
         generateBoard();
-        printBorad();
+        createDifficulty(3);
+        printBoard();
 
     }
 
     // instead of creating a half completed board create a full completed  board then take away the cells
 
     // Creates the Sudoku Board
-    public static void printBorad(){
+    public static void printBoard(){
         for(int Row=0; Row<9;Row++) {
             if(Row%3==0 && Row!=0) {
                 System.out.print("---------+---------+---------\n");
@@ -41,20 +42,49 @@ public class Main {
                  List<Integer> listValues = Arrays.asList(values);
                  Collections.shuffle(listValues);
                  listValues.toArray(values);
-                 for(int j=0;j<9;j++){
+                 for(int j = 0; j < 9; j++){
                      if(checkGrid(sudokuBoard,values[j],row,col)){
                          sudokuBoard[row][col]=values[j];
                          if(!checkEmpty(sudokuBoard)||generateBoard()){
                              return true;
                          }
                      }
-                     break;
                  }
-
+                 break;
              }
          }
          sudokuBoard[row][col]=0;
         return false;
+    }
+
+    public static void createDifficulty( int difficulty) {
+
+        switch(difficulty){
+            case(1):
+                cellDeletion((int) (30+ Math.random()*5));
+                break;
+            case(2):
+                cellDeletion((int) (35+ Math.random()*5));
+                break;
+            case(3):
+                cellDeletion((int) (45+ Math.random()*5));
+                break;
+            default:
+                cellDeletion((int) (20+ Math.random()*5));
+                break;
+        }
+    }
+
+    public static void cellDeletion(int numOfDeletion ){
+        int row,col;
+        for(int i=0; i<= numOfDeletion;i++){
+            do{
+                row = (int)(Math.random()*9);
+                col = (int)(Math.random()*9);
+            }while(sudokuBoard[row][col] ==0);
+
+            sudokuBoard[row][col]=0;
+        }
     }
 
     public static boolean checkRow(int[][] grid, int num, int row){
