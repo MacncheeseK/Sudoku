@@ -107,7 +107,8 @@ public class Main {
             System.out.println("1. Start the game\n2.Auto solve\n3.Exit");
             int userInput = input.nextInt();
             if(userInput==1){
-
+                cellInsetion();
+                printBoard();
             }else if(userInput ==2){
                 solve(0,0);
                 printBoard();
@@ -116,6 +117,27 @@ public class Main {
             }
         }
     }
+    public static void cellInsetion(){
+        Scanner input = new Scanner(System.in);
+        int rowInput,colInput;
+        System.out.println("Pick a cell to input a number");
+        do {
+            System.out.println("First pick the Row");
+             rowInput = input.nextInt();
+            System.out.println("Second pick the Col");
+             colInput = input.nextInt();
+        }while(!(0 <=rowInput && rowInput<9 && 0<=colInput && colInput<9));
+        System.out.println("What number would you like to add at "+ rowInput +" , "+colInput+".");
+        int userNumber = input.nextInt();
+        while(!(0<userNumber && userNumber<=9)){
+            System.out.println("Error Please enter a number from 1-9.");
+            userNumber=input.nextInt();
+        }
+        sudokuBoard[rowInput][colInput] = userNumber;
+    }
+
+
+
 
     public static boolean checkRow(int[][] grid, int num, int row){
         for(int col=0 ;col<9;col++){
