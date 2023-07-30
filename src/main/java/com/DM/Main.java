@@ -31,6 +31,13 @@ public class Main {
         }
         System.out.println();
     }
+    public static void gui(){
+
+
+
+
+
+    }
 
     public static boolean generateBoard(){
          int row = 0,col=0;
