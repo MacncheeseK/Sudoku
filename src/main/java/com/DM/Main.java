@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 public class Main {
     public static int[][] sudokuBoard = new int [9][9];
+    public static int[][] solvedSudokuBoard= new int[9][9];
     public static Integer[] values = {1,2,3,4,5,6,7,8,9};
     public static void main(String[] args) {
         generateBoard();
@@ -39,6 +40,26 @@ public class Main {
 
     }
 
+    public static void validateBoard(){
+        int num =0;
+        for(int row =0; row<9;row++){
+            for(int col =0; col<9; col++){
+                if(sudokuBoard[row][col] !=0){
+                    if(solvedSudokuBoard[row][col] != sudokuBoard[row][col]){
+                        sudokuBoard[row][col]= 0;
+                        num++;
+                    }
+                }
+            }
+        }
+        printBoard();
+        if(num>0) {
+            System.out.println("You had "+ num +" cell in the wrong place and are now reverted back.");
+        }else{
+            System.out.println("Your board is valid.");
+        }
+    }
+
     public static boolean generateBoard(){
          int row = 0,col=0;
          for(int i=0; i<81;i++){
@@ -63,6 +84,7 @@ public class Main {
         return false;
     }
     public static void chooseDifficulty(){
+        copyBoard();
         Scanner input = new Scanner(System.in);
         System.out.println("Please type your number for difficulty.");
         System.out.println("1. Easy\n2. Medium\n3. Hard\n4.Exit");
@@ -111,17 +133,20 @@ public class Main {
         Scanner input = new Scanner(System.in);
         while(true){
             System.out.println("Please type your next step");
-            System.out.println("1. Start the game\n2.Auto solve\n3.Exit");
+            System.out.println("1. Start the game\n2.Validate board\n3.Auto solve\n4.Exit");
             int userInput = input.nextInt();
             if(userInput==1){
                 cellInsetion();
                 printBoard();
             }else if(userInput ==2){
+                validateBoard();
+            }else if(userInput ==3){
                 solve(0,0);
                 printBoard();
-            }else if(userInput ==3){
+            }else if(userInput ==4){
                 break;
             }
+
         }
     }
     public static void cellInsetion(){
@@ -141,6 +166,14 @@ public class Main {
             userNumber=input.nextInt();
         }
         sudokuBoard[rowInput][colInput] = userNumber;
+    }
+
+    public static void copyBoard(){
+        for(int row=0; row<9; row++){
+            for(int col=0; col<9;col++){
+                solvedSudokuBoard[row][col]=sudokuBoard[row][col];
+            }
+        }
     }
 
 
