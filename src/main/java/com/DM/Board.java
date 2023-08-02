@@ -10,9 +10,11 @@ public class Board {
     public static int[][] solvedSudokuBoard= new int[9][9];
     public static Integer[] values = {1,2,3,4,5,6,7,8,9};
     public static void main(String[] args){
-
+        Board gameBoard = new Board();
     }
-    public static boolean generateBoard(){
+
+
+    public static boolean setSudokuBoard(){
         int row = 0,col=0;
         for(int i=0; i<81;i++){
             row = Math.floorDiv(i,9);
@@ -24,7 +26,7 @@ public class Board {
                 for(int j = 0; j < 9; j++){
                     if(checkGrid(sudokuBoard,values[j],row,col)){
                         sudokuBoard[row][col]=values[j];
-                        if(!checkEmpty(sudokuBoard)||generateBoard()){
+                        if(!checkEmpty(sudokuBoard)||setSudokuBoard()){
                             return true;
                         }
                     }
@@ -35,8 +37,15 @@ public class Board {
         sudokuBoard[row][col]=0;
         return false;
     }
+    public static void setSolvedSudokuBoard(){
+        for(int row=0; row<9; row++){
+            for(int col=0; col<9;col++){
+                solvedSudokuBoard[row][col]=sudokuBoard[row][col];
+            }
+        }
+    }
     public static void chooseDifficulty(){
-        copyBoard();
+        setSolvedSudokuBoard();
         Scanner input = new Scanner(System.in);
         System.out.println("Please type your number for difficulty.");
         System.out.println("1. Easy\n2. Medium\n3. Hard\n4.Exit");
@@ -131,16 +140,7 @@ public class Board {
             System.out.println();
         }
         System.out.println();
-    }public static void copyBoard(){
-        for(int row=0; row<9; row++){
-            for(int col=0; col<9;col++){
-                solvedSudokuBoard[row][col]=sudokuBoard[row][col];
-            }
-        }
     }
-
-
-
 
     public static boolean checkRow(int[][] grid, int num, int row){
         for(int col=0 ;col<9;col++){
@@ -203,5 +203,11 @@ public class Board {
             }
         }
         return false;
+    }
+    public int[][] getSudokuBoard(){
+        return sudokuBoard;
+    }
+    public int[][] getSolvedSudokuBoard(){
+        return solvedSudokuBoard;
     }
 }

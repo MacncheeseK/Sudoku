@@ -15,7 +15,6 @@ public class SudokuGame {
         chooseDifficulty();
 
     }
-
     // instead of creating a half completed board create a full completed  board then take away the cells
 
     // Creates the Sudoku Board
