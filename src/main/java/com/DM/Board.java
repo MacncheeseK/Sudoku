@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Board {
+
     public static int[][] sudokuBoard = new int [9][9];
     public static int[][] solvedSudokuBoard= new int[9][9];
     public static Integer[] values = {1,2,3,4,5,6,7,8,9};
@@ -211,5 +212,20 @@ public class Board {
     }
     public int[][] getSolvedSudokuBoard(){
         return solvedSudokuBoard;
+    }
+
+    public boolean finish(){
+        if(!checkEmpty(sudokuBoard)){
+            if(checkGrid(sudokuBoard,0,0,0)){
+                System.out.println("Congratulations you solved the sudoku puzzle.");
+                return true;
+            }else{
+                System.out.println("Sorry you board its not solved correctly.");
+                return false;
+            }
+        }else {
+            System.out.println("Sorry you have not completed the board.");
+            return false;
+        }
     }
 }
