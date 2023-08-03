@@ -9,8 +9,10 @@ public class Board {
     public static int[][] sudokuBoard = new int [9][9];
     public static int[][] solvedSudokuBoard= new int[9][9];
     public static Integer[] values = {1,2,3,4,5,6,7,8,9};
-    public static void main(String[] args){
-        Board gameBoard = new Board();
+    public Board(){
+
+        setSudokuBoard();
+        chooseDifficulty();
     }
 
 
@@ -128,7 +130,7 @@ public class Board {
         sudokuBoard[rowInput][colInput] = userNumber;
     }
 
-    public static void printBoard(){
+    public  static void printBoard(){
         for(int Row=0; Row<9;Row++) {
             if(Row%3==0 && Row!=0) {
                 System.out.print("---------+---------+---------\n");
